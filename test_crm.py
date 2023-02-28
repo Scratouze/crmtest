@@ -4,32 +4,38 @@ from tinydb import TinyDB, table
 from tinydb.storages import MemoryStorage
 
 
+# Fixture to initialize the in-memory database for each test
 @pytest.fixture
 def setupDb():
     User.DB = TinyDB(storage=MemoryStorage)
 
 
+# Fixture to initialize a test user in the database
 @pytest.fixture
 def user(setupDb):
     u = User(firstName="Patrick",
              lastName="Martin",
              address="1 rue du chemin, 75000 Paris",
              phoneNumber="0123456789")
+    # Save the user to the database
     u.save()
+    # Return the user for use in tests
     return u
 
 
+# Test method to verify that the user's first name is correct
 def test_firstName(user):
     assert user.firstName == "Patrick"
 
 
 # ...
 
-
+# Test method to verify that the user's full name is correct
 def test_full_name(user):
     assert user.fullName == "Patrick Martin"
 
 
+# Test method to verify that the user's database instance is correct
 def test_dbInstance(user):
     assert isinstance(user.dbInstance, table.Document)
     assert user.dbInstance["firstName"] == "Patrick"
