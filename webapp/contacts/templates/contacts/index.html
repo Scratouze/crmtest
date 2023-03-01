@@ -11,36 +11,52 @@
 <div class="navbar">
     <h1 class="text-white">Carnet d'adresses</h1>
 </div>
-
-{% for user in users %}
-    <h2>{{ user.fullName }}</h2>
-    {% if user.address %}
-        <p>{{ user.address }}</p>
-    {% endif %}
-    {% if user.phoneNumber %}
-        <p>{{ user.phoneNumber }}</p>
-    {% endif %}
-<form action="{% url 'delete-contact' %}" method="POST">
-    {% csrf_token %}
-    <input type="hidden" name="firstName" value="{{ user.firstName }}">
-    <input type="hidden" name="lastName" value="{{ user.lastName }}">
-    <button type="submit">Supprimer</button>
-</form>
-
-
-{% endfor %}
-
-<form action="{% url 'add-contact' %}"  method="POST">
-    {% csrf_token %}
-    <label for="firstName">Prénom</label>
-    <input name="firstName" id="firstName" type="text">
-    <label for="lastName">Nom</label>
-    <input name="lastName" id="lastName" type="text">
-    <label for="address">adresse</label>
-    <textarea name="address" id="address" rows="3"></textarea>
-    <label for="phoneNumber">Téléphone</label>
-    <input name="phoneNumber" id="phoneNumber" type="text">
-    <button type="submit">Ajouter</button>
-</form>
+<div class="container">
+    <div class="row g-4">
+        {% for user in users %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">{{ user.fullName }}</h2>
+                    <p class="card-text">
+                        {% if user.address %}
+                    <p>{{ user.address }}</p>
+                    {% endif %}
+                    {% if user.phoneNumber %}
+                    <p class="text-primary">{{ user.phoneNumber }}</p>
+                    {% endif %}
+                    </p>
+                    <form action="{% url 'delete-contact' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="firstName" value="{{ user.firstName }}">
+                        <input type="hidden" name="lastName" value="{{ user.lastName }}">
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="row mt-5">
+        <form action="{% url 'add-contact' %}"  method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="firstName" class="form-label">Prénom</label>
+                <input name="firstName" id="firstName" type="text" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="lastName" class="form-label">Nom</label>
+                <input name="lastName" id="lastName" type="text" class="form-control">
+            </div>
+            <label for="address" class="form-label">adresse</label>
+            <textarea name="address" id="address" rows="3" class="form-control"></textarea>
+            <div class="mb-3">
+                <label for="phoneNumber" class="form-label">Téléphone</label>
+                <input name="phoneNumber" id="phoneNumber" type="text" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+        </form>
+    </div>
+</div>
 </body>
 </html>
