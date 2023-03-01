@@ -77,7 +77,7 @@ if __name__ == "__main__":
     from faker import Faker
 
     fake = Faker(locale="fr_FR")
-    for _ in range(100):
+    for _ in range(5):
         user = User(firstName=fake.first_name(),
                     lastName=fake.last_name(),
                     phoneNumber=fake.phone_number(),

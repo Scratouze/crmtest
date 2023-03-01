@@ -104,15 +104,18 @@ def test__check_name_invalid_char(setupDb):
 
     assert "Nom invalide" in str(err.value)
 
+
 # Test method to verify that user exist in db after saving
 def test_exists(user):
     assert user.exists()
+
 
 # Test method to verify that user not exist in db if not saving
 def test_not_exists(setupDb):
     u = User(firstName="Test",
              lastName="Tes")
     assert not u.exists()
+
 
 # Test method to verify that user has been deleted
 def test_delete(setupDb):
